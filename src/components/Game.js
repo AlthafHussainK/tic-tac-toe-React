@@ -19,7 +19,7 @@ const Game = () => {
     const squares = [...current]
     
     // if user click an occupied square or if game is won, return
-    if (winner || boardCopy[i]) return
+    if (winner || squares[i]) return
     // put an X or an O in the clicked square
     squares[i] = xIsNext ? 'X' : 'O'
     setHistory([...timeInHistory, squares])
@@ -27,22 +27,28 @@ const Game = () => {
     setXisNext(!xIsNext)
   }
 
-  const jumpTo = () => {
-
+  const jumpTo = step => {
+    setStepNumber(step)
+    setXisNext(step % 2 === 0)
   }
 
-  const renderMove = () => {
-    return <button onClick={() => setBoard(Array(9).fill(null))}>
-      Start Game
-    </button>
-  }
+  const renderMoves = () => (
+    history.map((_step, move) => {
+      const destination = move ? `Go to move#${move}` : 'Go to start'
+      return (
+        <li key={move}>
+          <button onClick={() => jumpTo(move)}>{destination}</button>
+        </li>
+      )
+    })
+  )
 
   return (
     <>
-      <Board squares={board} onClick={handleClick} />
+      <Board squares={history[stepNumber]} onClick={handleClick} />
       <div style={styles}>
         <p>{winner ? 'Winner: ' + winner: 'Next Player: ' + (xIsNext ? 'X' : 'O')}</p>
-        {renderMove()}
+        {renderMoves()}
       </div>
     </>
   )
