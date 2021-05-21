@@ -1,5 +1,19 @@
-import React from 'react'
+import React, { useImperativeHandle } from 'react'
+import Board from './Board'
 
-const Game = () => <div>Tic Tac Toe Game</div>
+const Game = () => {
+
+  const handleClick = () => {
+
+  }
+
+  const jumpTo = () => {
+    
+  }
+
+  return (
+    <Board onClick={handleClick} />
+  )
+}
 
 export default Game
